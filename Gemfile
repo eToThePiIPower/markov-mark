@@ -10,4 +10,5 @@ group :development do
   gem 'pry'
   gem 'rubocop'
   gem 'simplecov'
+  gem 'mutant-rspec'
 end
