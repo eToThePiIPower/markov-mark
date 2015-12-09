@@ -49,4 +49,25 @@ describe MarkovChain do
       )
     end
   end
+
+  describe '#talk' do
+    it 'generates some text' do
+      mark = MarkovChain.new
+      mark.learn 'text'
+
+      sample = mark.talk
+
+      expect(sample).to eq 'text'
+    end
+
+    it 'accepts an optional seed word' do
+      mark = MarkovChain.new
+      mark.learn 'one two three four five six seven eight'
+
+      sample = mark.talk('two')
+
+      expect(sample.split.first).to eq 'two'
+      expect(sample).to eq 'two three four five six seven eight'
+    end
+  end
 end

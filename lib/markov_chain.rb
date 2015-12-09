@@ -5,19 +5,17 @@ class MarkovChain
   end
 
   def learn(text)
-    text = text.downcase.chomp
-    wordlist = text.split
+    wordlist = text.split.map(&:chomp)
     wordlist.each_with_index do |word, i|
-      @words[word] ||= {}
-      @words[word][wordlist[i + 1]] ||= 0
+      @words[word] ||= Hash.new(0)
       @words[word][wordlist[i + 1]] += 1
     end
   end
 
-  def talk
+  def talk(next_word = nil)
     sentence = []
-    next_word = @words.keys.sample
-    while(true)
+    next_word ||= @words.keys.sample
+    loop do
       sentence << next_word
       next_word = pick_next(next_word)
       break if next_word.nil?
@@ -26,8 +24,8 @@ class MarkovChain
   end
 
   def pick_next(word)
-    deck = []
     return nil if @words[word].nil?
+    deck = []
     @words[word].each do |key, value|
       value.times { deck << key }
     end
