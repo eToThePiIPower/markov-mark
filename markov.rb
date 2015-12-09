@@ -1,3 +1,4 @@
+# A very, very simple Markov chain
 class MarkovChain
   def initialize
     @words = {}
@@ -5,17 +6,17 @@ class MarkovChain
 
   def learn(text)
     text = text.downcase.chomp
-    wordlist = text.split.map(&:split).flatten
+    wordlist = text.split
     wordlist.each_with_index do |word, i|
       @words[word] ||= {}
-      @words[word][wordlist[i+1]] ||= 0
-      @words[word][wordlist[i+1]] += 1
+      @words[word][wordlist[i + 1]] ||= 0
+      @words[word][wordlist[i + 1]] += 1
     end
   end
 
   def talk
     sentence = []
-    next_word = @words.keys.shuffle.first
+    next_word = @words.keys.sample
     while(true)
       sentence << next_word
       next_word = pick_next(next_word)
@@ -30,7 +31,7 @@ class MarkovChain
     @words[word].each do |key, value|
       value.times { deck << key }
     end
-    deck.shuffle.first
+    deck.sample
   end
 
   attr_reader :words
