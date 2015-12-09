@@ -9,4 +9,5 @@ group :development do
   gem 'guard-rspec'
   gem 'pry'
   gem 'rubocop'
+  gem 'simplecov'
 end
