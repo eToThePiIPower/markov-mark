@@ -7,7 +7,7 @@ describe MarkovChain do
       mark = MarkovChain.new
       mark.learn 'test one test two'
 
-      words = mark.words
+      words = mark.instance_variable_get('@words')
 
       expect(words).to eq(
         'test' => {
@@ -28,7 +28,7 @@ describe MarkovChain do
       mark.learn 'test one test two'
       mark.learn 'one test four test'
 
-      words = mark.words
+      words = mark.instance_variable_get('@words')
 
       expect(words).to eq(
         'test' => {
@@ -45,6 +45,26 @@ describe MarkovChain do
         },
         'four' => {
           'test' => 1
+        }
+      )
+    end
+
+    it 'chomps non-printing characters' do
+      mark = MarkovChain.new
+      mark.learn "test\t one test two"
+
+      words = mark.instance_variable_get('@words')
+
+      expect(words).to eq(
+        'test' => {
+          'one' => 1,
+          'two' => 1
+        },
+        'one' => {
+          'test' => 1
+        },
+        'two' => {
+          nil => 1
         }
       )
     end
@@ -68,6 +88,18 @@ describe MarkovChain do
 
       expect(sample.split.first).to eq 'two'
       expect(sample).to eq 'two three four five six seven eight'
+    end
+
+    it 'is random' do
+      mark = MarkovChain.new
+      mark.learn "one two three o'clock four o'clock rock"
+      mark.learn 'one is the lonliest number that there ever is'
+      mark.learn 'two can be as bad as one its the lonliest number since the number one'
+
+      sample1 = mark.talk
+      sample2 = mark.talk
+
+      expect(sample1).not_to eq(sample2)
     end
   end
 end

@@ -5,7 +5,7 @@ class MarkovChain
   end
 
   def learn(text)
-    wordlist = text.split.map(&:chomp)
+    wordlist = text.split
     wordlist.each_with_index do |word, i|
       @words[word] ||= Hash.new(0)
       @words[word][wordlist[i + 1]] += 1
@@ -23,6 +23,8 @@ class MarkovChain
     sentence.join(' ')
   end
 
+  private
+
   def pick_next(word)
     return nil if @words[word].nil?
     deck = []
@@ -31,6 +33,4 @@ class MarkovChain
     end
     deck.sample
   end
-
-  attr_reader :words
 end
