@@ -1,12 +1,15 @@
 # Markov Mark
 
-Markov Mark is a Markov chain. At the moment, it's a very simple implementation
-I threw together at a mini-hackathon over 20 minutes. As such, there are no
-tests, no refactoring, and no guarantees.
+Markov Mark is a Markov chain framework. It began as a very simple
+implementation of Markov chains I threw together at a hack night over a 30
+minute period, as a first foray into natural language processing. I'm beginning
+to grow it out into a fuller "framework" for NLP and/or chat-bots, using
+pluggable engines, learning parsers, and actors.
 
-That said, I plan to continue working on it bit by bit, and perhaps eventually
-turn it into a Twitter bot. As this is my first time experimenting with NLP, its
-going to be fun :D
+It's still in a very early stage, but I'm hoping to keep development going
+forward. I'll soon be adding Parsers for Twitter and possibly other online
+services, as well as Actors that can post to online services. Keep an eye on
+this space!
 
 A sample output after training on the text of Macbeth (line-by-line):
 
@@ -14,7 +17,8 @@ A sample output after training on the text of Macbeth (line-by-line):
 
 Create a new instance
 ```
-mark = MarkovChain.new
+require 'engines/markov_engine'
+mark = MarkovEngine.new
 ```
 
 Learn on some text (an arbitrary amount)
@@ -33,6 +37,15 @@ mark.talk
  => "take arms against a sea of outrageous fortune"
 ```
 
+Learn from an entire play, or just one speaker
+```
+require 'parsers/playdoc_parser'
+PlaydocParser.parse(File.open('data/macbeth.xml'), engine: mark)
+PlaydocParser.parse(File.open('data/macbeth.xml'), engine: mark, speaker: "MACBETH")
+```
+Parsing on a single engine is cumulative, so you can train on as many individual
+plays, speakers, etc. as you want.
+
 ## Sample Output
 
 "Again, pray god be lion-mettled, proud; and shoal of fear. Give thee compass'd
@@ -41,4 +54,4 @@ with those linen cheeks of most kind hostess; and great king may"
 "You'll buy me pale! light thickens; and I pray, be well:"
 
 "Consort with bloody instructions, which, you would make honour both. Go at the
-cry 'sleeep' no other;"
+cry 'sleep' no other;"
