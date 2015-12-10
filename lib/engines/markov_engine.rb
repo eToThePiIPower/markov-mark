@@ -1,5 +1,5 @@
 # A very, very simple Markov chain
-class MarkovChain
+class MarkovEngine
   def initialize
     @words = {}
   end

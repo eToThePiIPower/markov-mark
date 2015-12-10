@@ -1,10 +1,10 @@
 require 'spec_helper'
-require 'engines/markov_chain'
+require 'engines/markov_engine'
 
-describe MarkovChain do
+describe MarkovEngine do
   describe '#learn' do
     it 'generates a Markov dictionary from a learned sentence' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn 'test one test two'
 
       words = mark.instance_variable_get('@words')
@@ -24,7 +24,7 @@ describe MarkovChain do
     end
 
     it 'adds to the Markov dictionary from a second learned sentence' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn 'test one test two'
       mark.learn 'one test four test'
 
@@ -50,7 +50,7 @@ describe MarkovChain do
     end
 
     it 'chomps non-printing characters' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn "test\t one test two"
 
       words = mark.instance_variable_get('@words')
@@ -72,7 +72,7 @@ describe MarkovChain do
 
   describe '#talk' do
     it 'generates some text' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn 'text'
 
       sample = mark.talk
@@ -81,7 +81,7 @@ describe MarkovChain do
     end
 
     it 'accepts an optional seed word' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn 'one two three four five six seven eight'
 
       sample = mark.talk('two')
@@ -91,7 +91,7 @@ describe MarkovChain do
     end
 
     it 'is random' do
-      mark = MarkovChain.new
+      mark = MarkovEngine.new
       mark.learn "one two three o'clock four o'clock rock"
       mark.learn 'one is the lonliest number that there ever is'
       mark.learn 'two can be as bad as one its the lonliest number since the number one'
