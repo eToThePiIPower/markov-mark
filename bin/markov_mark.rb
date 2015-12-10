@@ -1,15 +1,21 @@
 #!/usr/bin/env ruby
-data = File.expand_path('../../data', __FILE__)
-lib = File.expand_path('../../lib', __FILE__)
+root = File.expand_path('../..', __FILE__)
+data = "#{root}/data"
+lib = "#{root}/lib"
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-
 require 'markov_chain'
-require 'nokogiri'
+require 'playdoc_parser'
+require 'tools'
 
 mark = MarkovChain.new
-doc = Nokogiri::XML(File.open("#{data}/macbeth.xml"))
-doc.xpath('//LINE').map(&:text).each do |line|
-  line = line.downcase
-  mark.learn(line)
+if ARGV.empty?
+  PlaydocParser.parse(File.open("#{data}/macbeth.xml"),
+                      engine: mark)
+else
+  ARGV.each do |speaker|
+    PlaydocParser.parse(File.open("#{data}/macbeth.xml"),
+                        engine: mark,
+                        speaker: speaker)
+  end
 end
-puts mark.talk
+puts sentence_case(mark.talk)
