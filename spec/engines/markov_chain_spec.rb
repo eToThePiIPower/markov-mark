@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'markov_chain'
+require 'engines/markov_chain'
 
 describe MarkovChain do
   describe '#learn' do
