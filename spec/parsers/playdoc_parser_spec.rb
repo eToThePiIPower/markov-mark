@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'playdoc_parser'
+require 'parsers/playdoc_parser'
 
 describe PlaydocParser do
   describe '.parse' do
