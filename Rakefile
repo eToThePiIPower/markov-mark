@@ -5,3 +5,15 @@ RSpec::Core::RakeTask.new do |task|
 end
 
 task default: [:spec]
+
+desc 'Open a console'
+task :console do
+  lib = File.expand_path('../lib', __FILE__)
+  $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
+  require 'irb'
+  require 'irb/completion'
+  require 'engines/markov_engine'
+  require 'parsers/playdoc_parser'
+  ARGV.clear
+  IRB.start
+end
