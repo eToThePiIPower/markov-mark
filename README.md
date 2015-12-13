@@ -15,6 +15,15 @@ A sample output after training on the text of Macbeth (line-by-line):
 
 ## Use
 
+Loading a console
+```
+$ rake pry
+$ rake irb
+$ rake console
+```
+This automatically loads all all engines and parsers currently available, and
+sets the load path. `rake console` is aliased to `rake pry`
+
 Create a new instance
 ```
 require 'engines/markov_engine'
