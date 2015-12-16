@@ -1,3 +1,5 @@
+require 'tools'
+
 # A very, very simple Markov chain
 class MarkovEngine
   def initialize
@@ -20,7 +22,7 @@ class MarkovEngine
       next_word = pick_next(next_word)
       break if next_word.nil?
     end
-    sentence.join(' ')
+    sentence_case(sentence.join(' '))
   end
 
   private

@@ -77,7 +77,7 @@ describe MarkovEngine do
 
       sample = mark.talk
 
-      expect(sample).to eq 'text'
+      expect(sample).to eq 'Text'
     end
 
     it 'accepts an optional seed word' do
@@ -86,8 +86,8 @@ describe MarkovEngine do
 
       sample = mark.talk('two')
 
-      expect(sample.split.first).to eq 'two'
-      expect(sample).to eq 'two three four five six seven eight'
+      expect(sample.split.first).to eq 'Two'
+      expect(sample).to eq 'Two three four five six seven eight'
     end
 
     it 'is random' do
