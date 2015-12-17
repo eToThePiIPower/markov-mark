@@ -68,6 +68,17 @@ describe MarkovEngine do
         }
       )
     end
+
+    it 'returns a list of proper nouns' do
+      mark = MarkovEngine.new
+      mark.learn 'One Two'
+      mark.learn 'Two one'
+      mark.learn 'Three. One'
+
+      proper_nouns = mark.proper_nouns
+
+      expect(proper_nouns).to eq(['Two', 'Three'])
+    end
   end
 
   describe '#talk' do
