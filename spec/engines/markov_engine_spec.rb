@@ -68,6 +68,17 @@ describe MarkovEngine do
         }
       )
     end
+
+    it 'returns a list of proper nouns' do
+      mark = MarkovEngine.new
+      mark.learn 'One Two'
+      mark.learn 'Two one'
+      mark.learn 'Three. One'
+
+      proper_nouns = mark.proper_nouns
+
+      expect(proper_nouns).to eq(['Two', 'Three'])
+    end
   end
 
   describe '#talk' do
@@ -77,7 +88,7 @@ describe MarkovEngine do
 
       sample = mark.talk
 
-      expect(sample).to eq 'text'
+      expect(sample).to eq 'Text'
     end
 
     it 'accepts an optional seed word' do
@@ -86,8 +97,8 @@ describe MarkovEngine do
 
       sample = mark.talk('two')
 
-      expect(sample.split.first).to eq 'two'
-      expect(sample).to eq 'two three four five six seven eight'
+      expect(sample.split.first).to eq 'Two'
+      expect(sample).to eq 'Two three four five six seven eight'
     end
 
     it 'is random' do
